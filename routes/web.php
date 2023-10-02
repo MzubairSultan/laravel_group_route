@@ -2,114 +2,63 @@
 
 use Illuminate\Support\Facades\Route;
 
+// 1) Topic Laravel Name Route  and 2) Redirect 
 
+
+// laravel name route jb b apny koi route define krna hy to apny name route ko use krna hy isky ya faida hy k in future apko route chang krna pry to aik e jga change krny sy sari jga par automaticly change hojye ga eg
 
 // Route::get('/', function () {
 //     return view('welcome');
 // });
 
-//  Route::get('/about', function () {
-//      return view('About');
-//  });
+// //  Route::get('/about', function () {
+// //      return view('About');
+// //  })->name('myabout');
 
-// anothe method for routes use
+//  Route::get('/post', function () {
+//     return view('Post');
+// })->name('mypost');
 
-//Route::view('/about','About');
+// // 2) ager user ny hmry about us page ko bookmark kia hy or in future hum usko change kr dety hy to jb wo hmary about us page ko access kry ga to usko error mily ga iska ya solution hy k hum  Redirect kry wo kesy 
 
-// making subroute method
+// Route::get('/test', function () {
+//     return view('About');
+// })->name('myabout');
 
-// Route::get('/about/firstabout', function () {
-//     return view('firstabout');
-// });
-//----------------------------------------------------------------
-// 2)Route With Parameter
-//  Lakin iska aik noqsan ya hy k ager user ny koi value pass nahi ki to aye ga error page not found iska solution nichy wala code hoga
+// Route::redirect('/about','/test');
 
-    // Route::get('/about/{id}', function (String $value) {
-    //     return "<h1>About Id:".$value."</h1>";
-    // });
-//  agr user value nahi dy ga to iska solution ya hog  error sy bchny k liye
-    // Route::get('/about/{id?}', function (String $value = null) {
-    //     if($value){
-    //         return "<h1>About Id:".$value."</h1>";
-    //     }else{
-    //         return "<h1>id not found</h1>";
-    //     }
-        
-    // });
+// -----------------------------------------------------------------------------
+
+// 3) Laravel Group Route 
+
+//  jo same route hoty hy unko hum aik e group my likh dety hy isko bolty hy group route
 
 
 
-// ager hum chaty hy user sy multiple value ly  
+// ub in sb my sy jo common cheez hy wo hy pages iska hum gropu route bny gy
 
-// Route::get('/about/{id?}/commint/{commintid?}', function (String $value = null, String $comid = null) {
-//          if($value){
-//              return "<h1>About Id:".$value."</h1>"."<h2>commment id".$comid."</h2>";
-//          }else{
-//              return "<h1>id not found</h1>";
-//          }
+Route::prefix('page')->group(function(){
 
-//         });
+    Route::get('/pic1',function (){
+        return "<h1>picture 1</h1>";
+    });
+    
+    Route::get('/pic2',function (){
+        return "<h1>picture 2</h1>";
+    });
+    
+    Route::get('/pic3',function (){
+        return "<h1>picture 3</h1>";
+    });
+    
+    
+    Route::get('/pic4',function (){
+        return "<h1>picture 4</h1>";
+    });
 
-//  -----------------------------------------------------------------------------------
-//    Laravel Route constrint iska mtlb ya hy k user numeric value dy dosri value na day 
-    //  ager hum constrians lgana chaty hy value k oper
 
-    // 1)Ager hum chaty hy k user sirf numveric value hi press kry  usky liye method 
-
-    //  Route::get('/about/{id?}', function (String $value = null, ) {
-    //       if($value){
-    //           return "<h1>About Id:".$value."</h1>";
-    //       }else{
-    //           return "<h1>id not found</h1>";
-    //       }
-
-    //      })->whereNumber('id');
-
-    // 2) Ager hum chaty hy k user sirf value alpha my dy to
-
-    //   Route::get('/about/{id?}', function (String $value = null, ) {
-    //        if($value){
-    //            return "<h1>About Id:".$value."</h1>";
-    //        }else{
-    //            return "<h1>id not found</h1>";
-    //        }
-
-    //      })->whereAlpha('id');
-
-    // 3) Ager hum chaty hy k user sirf value alpha numeric my ho to 
-    //  Note : ismy hum sirf alpha number b dy sakty hy 
-    //  or numeric value b dy sakty hy ya dono day sakty hy
-    // Route::get('/about/{id?}', function (String $value = null, ) {
-    //     if($value){
-    //         return "<h1>About Id:".$value."</h1>";
-    //     }else{
-    //         return "<h1>id not found</h1>";
-    //     }
-
-    //   })->whereAlphaNumeric('id');
-
-    //   4) Ager hum chaty hy k user hmri di hoe value my sy he value ko enter kry tb
-
-    Route::get('/about/{id?}', function (String $value = null, ) {
-        if($value){
-            return "<h1>About Id:".$value."</h1>";
-        }else{
-            return "<h1>id not found</h1>";
-        }
-
-      })->whereIn('id',['movie','song','img']);
-
-    //   --------------------------------------------------------
-
-    // 5) ager hum chty hy hum apna regular expression bnye to  us ky liye
-
-    Route::get('/about/{id?}', function (String $value = null, ) {
-        if($value){
-            return "<h1>About Id:".$value."</h1>";
-        }else{
-            return "<h1>id not found</h1>";
-        }
-
-      })->where('id','[0-9]+');
-
+});
+// page not found k liye hum ya b use kr sakty hy 
+Route::fallback(function(){
+  return "<h1>Page Not Found</h1>";
+});
